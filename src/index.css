@@ -47,3 +47,11 @@
 .division-nav+.page{padding-top:0}.division-nav+.page .page-hero{padding-top:82px}
 .inline-cta{margin-top:24px;width:max-content}
 @media(max-width:700px){.division-nav{top:80px}.division-nav-inner{gap:18px}.division-nav-inner strong{position:sticky;left:0;padding-right:14px;z-index:2}.division-nav.community .division-nav-inner strong{background:#e5eee7}.division-nav.professional .division-nav-inner strong{background:#efe4d6}}
+
+/* Expanded team profiles */
+.team-grid.expanded .card{min-height:520px;display:flex;flex-direction:column;align-items:flex-start}
+.team-grid.expanded .team-summary{font-size:16px;font-weight:650;color:#33453f}
+.team-grid.expanded .team-detail{margin-top:10px;font-size:14px;line-height:1.75;color:#68736f}
+.team-note{margin-top:30px;padding:28px;border:1px solid rgba(0,0,0,.06);border-radius:26px;background:linear-gradient(135deg,#e6eee8,#f2e8da)}
+.team-note p{max-width:900px;margin:12px 0 0;line-height:1.8;color:#586661}
+@media(max-width:960px){.team-grid.expanded .card{min-height:auto}}
