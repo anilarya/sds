@@ -37,3 +37,13 @@
 @keyframes breathe{0%,100%{transform:scale(.9);opacity:.55}50%{transform:scale(1.2);opacity:1}}
 @keyframes ringPulse{0%,100%{transform:scale(.8);opacity:.15}50%{transform:scale(1.1);opacity:.65}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+
+/* Division-level navigation: Community and Professional behave as two site folders */
+.division-nav{position:sticky;top:80px;z-index:40;border-bottom:1px solid rgba(0,0,0,.07);backdrop-filter:blur(16px)}
+.division-nav.community{background:rgba(229,238,231,.94)}.division-nav.professional{background:rgba(239,228,214,.95)}
+.division-nav-inner{min-height:54px;display:flex;align-items:center;gap:24px;overflow-x:auto;scrollbar-width:none}.division-nav-inner::-webkit-scrollbar{display:none}
+.division-nav-inner strong{margin-right:auto;white-space:nowrap;font-family:Georgia,serif;color:#173f34}.division-nav-inner a{position:relative;white-space:nowrap;padding:18px 0 15px;font-size:13px;color:#5c6863}
+.division-nav-inner a:after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:#a65d32;transition:right .25s ease}.division-nav-inner a:hover:after,.division-nav-inner a.active:after{right:0}.division-nav-inner a.active{color:#173f34;font-weight:700}
+.division-nav+.page{padding-top:0}.division-nav+.page .page-hero{padding-top:82px}
+.inline-cta{margin-top:24px;width:max-content}
+@media(max-width:700px){.division-nav{top:80px}.division-nav-inner{gap:18px}.division-nav-inner strong{position:sticky;left:0;padding-right:14px;z-index:2}.division-nav.community .division-nav-inner strong{background:#e5eee7}.division-nav.professional .division-nav-inner strong{background:#efe4d6}}
