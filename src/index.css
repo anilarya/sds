@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1d2b27;
+  background: #f7f3eb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; }
+* { box-sizing: border-box; }
+
+.font-serif {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .72rem;
+  line-height: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-weight: 700;
+  opacity: .72;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border-radius: 9999px;
+  padding: .85rem 1.2rem;
+  font-size: .9rem;
+  font-weight: 650;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.btn-primary {
+  background: #173f34;
+  color: white;
+}
+.btn-primary:hover { background: #245444; transform: translateY(-1px); }
+.btn-secondary {
+  border: 1px solid rgba(23,63,52,.14);
+  background: rgba(255,255,255,.48);
+  color: #173f34;
+}
+.btn-secondary:hover { background: rgba(255,255,255,.82); transform: translateY(-1px); }
+
+.card {
+  min-height: 320px;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 2rem;
+  background: rgba(255,255,255,.55);
+  padding: 1.75rem;
+  box-shadow: 0 18px 60px rgba(42,52,46,.05);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 80px rgba(42,52,46,.09);
+}
+
+.hero-orb {
+  position: absolute;
+  z-index: -1;
+  border-radius: 9999px;
+  filter: blur(2px);
+  opacity: .7;
+}
+.hero-orb-one {
+  width: 38rem;
+  height: 38rem;
+  right: -9rem;
+  top: 5rem;
+  background: radial-gradient(circle at 40% 40%, rgba(208,185,152,.62), rgba(208,185,152,0));
+}
+.hero-orb-two {
+  width: 28rem;
+  height: 28rem;
+  left: -10rem;
+  bottom: -3rem;
+  background: radial-gradient(circle at 50% 50%, rgba(137,165,151,.32), rgba(137,165,151,0));
+}
+
+::selection { background: #d8c3ab; color: #17342c; }
+
+a { color: inherit; text-decoration: none; }
+
+@media (max-width: 640px) {
+  .hero-orb-one { width: 24rem; height: 24rem; }
+  .card { min-height: auto; }
+}
