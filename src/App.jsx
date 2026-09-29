@@ -1,258 +1,38 @@
-import { ArrowRight, BookOpen, Building2, ChevronRight, CircleCheck, Globe2, GraduationCap, HeartHandshake, Menu, Microscope, Sparkles, Users, X } from 'lucide-react'
-import { useState } from 'react'
+import { ArrowRight, BookOpen, Building2, GraduationCap, Menu, Microscope, Quote, Sparkles, Users, X } from 'lucide-react'
+import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-const navItems = [
-  ['Approach', '#approach'],
-  ['Community', '#community'],
-  ['Healthy Mind', '#professional'],
-  ['Research', '#research'],
-  ['Programs', '#programs'],
-  ['About', '#about'],
+const nav=[['Approach','/approach'],['Community','/community'],['Professional','/professional'],['Research','/research'],['Testimonials','/testimonials'],['Team','/team']]
+const E=({children})=><div className="eyebrow">{children}</div>
+const Page=({label,title,intro,children})=><main className="page"><section className="page-hero"><div className="wrap"><E>{label}</E><h1>{title}</h1><p>{intro}</p></div></section>{children}</main>
+const Wrap=({children,className=''})=><div className={'wrap '+className}>{children}</div>
+const Card=({children})=><article className="card">{children}</article>
+
+function Layout({children}){
+ const [open,setOpen]=useState(false); const {pathname}=useLocation()
+ useEffect(()=>{window.scrollTo(0,0);setOpen(false)},[pathname])
+ return <div className="site"><header><div className="wrap nav"><Link to="/" className="brand"><span>S</span><div><b>Samyak Dhyaan Sangha</b><small>SDS · Healthy Mind Initiatives</small></div></Link><nav>{nav.map(([n,p])=><NavLink key={p} to={p}>{n}</NavLink>)}<Link className="nav-cta" to="/contact">Explore programs</Link></nav><button className="menu" onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button></div>{open&&<div className="mobile">{nav.map(([n,p])=><Link key={p} to={p}>{n}</Link>)}<Link to="/contact">Contact</Link></div>}</header>{children}<footer><Wrap className="footer"><div>© {new Date().getFullYear()} Samyak Dhyaan Sangha</div><div><a href="https://youtube.com/@quarkwellbeing" target="_blank">Quark Wellbeing</a><a href="https://youtube.com/@darshan-quest" target="_blank">Darshan Quest</a><a href="https://quarkwellbeing.substack.com/" target="_blank">Blog</a></div></Wrap></footer></div>
+}
+
+function Home(){return <main><section className="home-hero"><div className="orb a"/><div className="orb b"/><Wrap className="hero-grid"><div><span className="pill"><Sparkles size={14}/> Towards an Indian science of mental wellbeing</span><h1>Understand the mind.<br/><i>Cultivate it for life.</i></h1><p>A living approach to mental wellbeing bringing India’s traditions of Sāṃkhya, Yoga and Upāsanā into dialogue with contemporary research, learning and everyday practice.</p><div className="actions"><Link className="primary" to="/community">Explore community <ArrowRight size={17}/></Link><Link className="secondary" to="/professional">Healthy Mind Initiatives</Link></div></div><div className="pathways"><E>One vision · two pathways</E><h2>Mental fitness as part of everyday life.</h2><Link to="/community" className="path green"><Users/><small>Community</small><b>Samyak Dhyaan Sangha</b><p>Practice, learning and a community for people cultivating a healthy mind.</p></Link><Link to="/professional" className="path sand"><Building2/><small>Professional</small><b>Healthy Mind Initiatives</b><p>Programs for individuals, institutions, teams and leaders.</p></Link></div></Wrap></section><section className="dark"><Wrap className="split"><div><E>Why this work, why now</E><h2>Begin before something goes wrong.</h2></div><div><p>Mental wellbeing is often approached reactively. SDS begins earlier: understanding how the mind functions and how it can be developed through regular practice.</p><Link className="text-link" to="/approach">Explore our approach <ArrowRight size={16}/></Link></div></Wrap></section><section className="section"><Wrap><E>Explore SDS</E><h2 className="section-title">One website. A connected body of work.</h2><div className="grid3"><Card><BookOpen/><h3>Community</h3><p>Sandhyā, Patanjal Upasana, fellowship and practitioner learning.</p><Link to="/community">Visit community →</Link></Card><Card><Building2/><h3>Professional</h3><p>Mental-fitness pathways for organizations, institutions and individuals.</p><Link to="/professional">View programs →</Link></Card><Card><Microscope/><h3>Research</h3><p>Inquiry at the meeting point of Sāṃkhya, Yoga, cognition and wellbeing.</p><Link to="/research">Explore research →</Link></Card></div></Wrap></section></main>}
+
+function Approach(){return <Page label="Our approach" title="A developmental approach to the mind." intro="Rather than waiting for distress, SDS focuses on understanding and cultivating the mind through sustained practice, inquiry and learning."><section className="section"><Wrap className="split"><div><h2 className="section-title">Two knowledge streams, in dialogue.</h2></div><div className="prose"><p>India’s knowledge traditions—especially Sāṃkhya, Yoga and Vedic thought—offer systematic inquiry into mind, self, action and human flourishing.</p><p>SDS brings these traditions into conversation with contemporary psychology, psychiatry, neuroscience and technology, without treating either stream as a substitute for the other.</p></div></Wrap></section></Page>}
+
+function Community(){return <Page label="Community division" title="Samyak Dhyaan Sangha" intro="Built for practitioners — connect with people cultivating a healthy mind through practice, study and community."><section className="section"><Wrap><div className="grid3">{[['Sandhyā','A living cultural practice for cultivating a healthy mind and balanced life.'],['Patanjal Upasana','An accessible practice shaped around a structural understanding of the mind.'],['Sāṃkhya–Yoga Fellowship','Weekly study and inquiry into Sāṃkhya and Yogadarśana.']].map(([a,b])=><Card key={a}><BookOpen/><h3>{a}</h3><p>{b}</p></Card>)}</div></Wrap></section></Page>}
+
+function Professional(){return <Page label="Healthy Mind Initiatives" title={<>Build a stronger mind. <i>Live a fuller life.</i></>} intro="Professional outreach for individuals, institutions, teams and leaders, grounded in the same framework of mental cultivation."><section className="section sand-bg"><Wrap><div className="grid3">{[['Organizations','Custom training for teams, leadership and high-performance roles.'],['Institutions','Structured attention and mental-development modules for students and educators.'],['Individuals','Personal programs for focus, clarity and greater mental control.']].map(([a,b],i)=><Card key={a}>{i===0?<Building2/>:<GraduationCap/>}<h3>{a}</h3><p>{b}</p><Link to="/contact">Enquire →</Link></Card>)}</div></Wrap></section></Page>}
+
+function Research(){return <Page label="Research & inquiry" title="Tradition, examined with a contemporary lens." intro="Sustained study of Sāṃkhya, Yoga and Vedic thought alongside contemporary questions around cognition, wellbeing and human development."><section className="section"><Wrap><div className="stats"><div><b>30 years</b><span>Research and study informing the conceptual framework.</span></div><div><b>400+</b><span>Participants in a structured five-session Sandhyā series.</span></div><div><b>India · USA · UK</b><span>Fellowship participation described in the source material.</span></div></div><div className="prose wide"><h2>Academic engagement</h2><p>The source document records a paper selected for presentation at Auro University in February 2026, an abstract selected for a conference at Oxford, and a paper on AI and Self submitted for consideration in Paris.</p></div></Wrap></section></Page>}
+
+const testimonials=[
+ ['Participant feedback','The source document includes participant-feedback screenshots from SDS programs. We are keeping this section ready for the approved testimonial wording and names rather than inventing quotations.'],
+ ['Practice community','Feedback can be grouped here around practice experience, learning clarity and community participation once the original text is supplied or transcribed.'],
+ ['Programs & workshops','A second testimonial group can feature workshop and institutional participants, with consented names, roles and photographs where available.']
 ]
+function Testimonials(){return <Page label="Voices from the community" title="Experiences from practice and learning." intro="A dedicated space for participant voices from SDS practices, fellowships, courses and workshops."><section className="section"><Wrap><div className="grid3">{testimonials.map(([a,b])=><Card key={a}><Quote/><h3>{a}</h3><p>{b}</p></Card>)}</div><p className="note">The DOCX contains feedback as images, but does not provide reliable machine-readable testimonial text. Placeholder copy is intentionally used until the approved wording is available.</p></Wrap></section></Page>}
 
-function SectionLabel({ children }) {
-  return <div className="eyebrow">{children}</div>
-}
+function Team(){return <Page label="People behind the work" title="Team & inspiration" intro="A multidisciplinary effort connecting research, learning design, community development and India’s knowledge traditions."><section className="section"><Wrap><div className="team-grid"><Card><div className="avatar">RM</div><small>Co-founder</small><h3>Raunak Maheshwari</h3><p>Research · Learning Design · Community · Outreach</p></Card><Card><div className="avatar">AA</div><small>CTO</small><h3>Anil Arya</h3><p>Research · Writing · Presenting</p></Card><Card><div className="avatar warm">HC</div><small>Inspiration</small><h3>Dr. Harishchandra</h3><p>The source document describes the work as shaped by his three decades of research. It identifies him as a combustion scientist, Vedic scholar, author, and alumnus of IIT Kanpur and Princeton University.</p></Card></div></Wrap></section></Page>}
 
-function App() {
-  const [open, setOpen] = useState(false)
+function Contact(){return <Page label="Get involved" title="Find the pathway that fits." intro="Join the practitioner community, explore a learning program, or start a conversation about Healthy Mind Initiatives."><section className="section"><Wrap><div className="grid3"><Card><h3>Community</h3><p>Explore practice, learning and fellowship.</p><a href="https://youtube.com/@quarkwellbeing" target="_blank">Explore our work →</a></Card><Card><h3>Organizations</h3><p>Discuss custom training and professional programs.</p><span>Contact details to be added</span></Card><Card><h3>Institutions</h3><p>Explore structured modules for students and educators.</p><span>Contact details to be added</span></Card></div></Wrap></section></Page>}
 
-  return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f7f3eb] text-[#1d2b27]">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-[#f7f3eb]/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-8">
-          <a href="#top" className="flex items-center gap-3" aria-label="Samyak Dhyaan Sangha home">
-            <div className="grid size-10 place-items-center rounded-full border border-[#28493f]/15 bg-white/70 font-serif text-lg font-semibold text-[#28493f]">S</div>
-            <div>
-              <div className="font-serif text-lg font-semibold leading-none tracking-tight">Samyak Dhyaan Sangha</div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.24em] text-[#6d786f]">SDS · Healthy Mind Initiative</div>
-            </div>
-          </a>
-
-          <nav className="hidden items-center gap-7 lg:flex">
-            {navItems.map(([label, href]) => (
-              <a key={href} href={href} className="text-sm text-[#4c5b55] transition hover:text-[#163c31]">{label}</a>
-            ))}
-            <a href="#engage" className="rounded-full bg-[#173f34] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#245444]">Explore programs</a>
-          </nav>
-
-          <button className="lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-            {open ? <X /> : <Menu />}
-          </button>
-        </div>
-        {open && (
-          <div className="border-t border-black/5 bg-[#f7f3eb] px-5 py-5 lg:hidden">
-            <div className="mx-auto flex max-w-7xl flex-col gap-4">
-              {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="text-sm">{label}</a>)}
-            </div>
-          </div>
-        )}
-      </header>
-
-      <main id="top">
-        <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden pt-20">
-          <div className="hero-orb hero-orb-one" />
-          <div className="hero-orb hero-orb-two" />
-          <div className="mx-auto grid w-full max-w-7xl gap-14 px-5 py-20 md:px-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:py-28">
-            <div className="max-w-3xl">
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#183f34]/10 bg-white/55 px-4 py-2 text-xs font-medium uppercase tracking-[0.16em] text-[#365b50]">
-                <Sparkles size={14} /> Towards an Indian science of mental wellbeing
-              </div>
-              <h1 className="font-serif text-5xl font-medium leading-[.98] tracking-[-0.045em] text-[#17342c] sm:text-6xl lg:text-[5.6rem]">
-                Understand the mind.<br/><span className="italic text-[#a65d32]">Cultivate it for life.</span>
-              </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-[#55645e] md:text-xl">
-                A living approach to mental wellbeing that brings India’s traditions of Sāṃkhya, Yoga and Upāsanā into dialogue with contemporary research, learning and everyday practice.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <a href="#community" className="btn-primary">Explore the community <ArrowRight size={17}/></a>
-                <a href="#professional" className="btn-secondary">Healthy Mind Initiatives</a>
-              </div>
-            </div>
-
-            <div className="relative mx-auto w-full max-w-lg lg:ml-auto">
-              <div className="rounded-[2.2rem] border border-white/70 bg-white/55 p-6 shadow-[0_30px_90px_rgba(41,54,47,.12)] backdrop-blur-xl md:p-8">
-                <SectionLabel>One vision · two pathways</SectionLabel>
-                <h2 className="mt-4 font-serif text-3xl leading-tight tracking-tight text-[#1a382f]">Mental fitness as part of everyday life.</h2>
-                <div className="mt-7 space-y-4">
-                  <a href="#community" className="group block rounded-3xl bg-[#e7efe8] p-5 transition hover:-translate-y-1">
-                    <div className="flex items-start justify-between gap-4">
-                      <Users className="mt-1 text-[#28594b]" />
-                      <ChevronRight className="text-[#587168] transition group-hover:translate-x-1" />
-                    </div>
-                    <div className="mt-8 text-xs uppercase tracking-[.18em] text-[#60776e]">Community</div>
-                    <div className="mt-1 font-serif text-2xl">Samyak Dhyaan Sangha</div>
-                    <p className="mt-2 text-sm leading-6 text-[#5c6c66]">Practice, learning and a community for people cultivating a healthy mind.</p>
-                  </a>
-                  <a href="#professional" className="group block rounded-3xl bg-[#efe5d7] p-5 transition hover:-translate-y-1">
-                    <div className="flex items-start justify-between gap-4">
-                      <Building2 className="mt-1 text-[#865637]" />
-                      <ChevronRight className="text-[#8b735f] transition group-hover:translate-x-1" />
-                    </div>
-                    <div className="mt-8 text-xs uppercase tracking-[.18em] text-[#8f725d]">Professional</div>
-                    <div className="mt-1 font-serif text-2xl">Healthy Mind Initiatives</div>
-                    <p className="mt-2 text-sm leading-6 text-[#756b62]">Programs for individuals, institutions, teams and leaders.</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="approach" className="border-y border-black/5 bg-[#193d33] py-24 text-[#f7f3eb] md:py-32">
-          <div className="mx-auto grid max-w-7xl gap-14 px-5 md:px-8 lg:grid-cols-[.8fr_1.2fr]">
-            <div>
-              <SectionLabel>Why this work, why now</SectionLabel>
-              <h2 className="mt-5 max-w-md font-serif text-4xl leading-tight tracking-tight md:text-5xl">Begin before something goes wrong.</h2>
-            </div>
-            <div className="max-w-3xl space-y-7 text-lg leading-8 text-[#d5ddd9]">
-              <p>Mental wellbeing is often approached reactively—after distress becomes visible. SDS begins earlier: by understanding how the mind functions, how it responds to experience, and how it can be developed through regular practice.</p>
-              <p>The aim is not to place traditional and modern knowledge in opposition. It is to create meaningful dialogue between India’s long traditions of inquiry into the mind and the evidence, methods and tools of contemporary science.</p>
-              <div className="grid gap-4 pt-4 sm:grid-cols-3">
-                {['Clarity', 'Resilience', 'Flourishing'].map((item) => <div key={item} className="rounded-2xl border border-white/10 bg-white/5 p-4 font-serif text-xl text-white">{item}</div>)}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="community" className="py-24 md:py-32">
-          <div className="mx-auto max-w-7xl px-5 md:px-8">
-            <div className="max-w-3xl">
-              <SectionLabel>Community division</SectionLabel>
-              <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-6xl">Samyak Dhyaan Sangha</h2>
-              <p className="mt-5 text-xl leading-8 text-[#5b6964]">Built for practitioners — connect with people cultivating a healthy mind.</p>
-            </div>
-
-            <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[
-                ['Sandhyā', 'Reviving Sandhyā as a living cultural practice for cultivating a healthy mind and balanced life.', BookOpen],
-                ['Patanjal Upasana', 'A simple, accessible practice shaped around a structural understanding of the mind and contemporary life.', Sparkles],
-                ['Sāṃkhya–Yoga Fellowship', 'Deep conceptual learning of Sāṃkhya and Yogadarśana through weekly study and inquiry.', GraduationCap],
-              ].map(([title, text, Icon]) => (
-                <article key={title} className="card">
-                  <Icon className="text-[#8f5a37]" />
-                  <h3 className="mt-10 font-serif text-3xl">{title}</h3>
-                  <p className="mt-3 leading-7 text-[#66716d]">{text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="professional" className="bg-[#eee4d5] py-24 md:py-32">
-          <div className="mx-auto max-w-7xl px-5 md:px-8">
-            <div className="grid gap-12 lg:grid-cols-2 lg:items-end">
-              <div>
-                <SectionLabel>Professional division</SectionLabel>
-                <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-6xl">Build a stronger mind.<br/><span className="italic text-[#985b36]">Live a fuller life.</span></h2>
-              </div>
-              <p className="max-w-xl text-lg leading-8 text-[#665f58] lg:ml-auto">Healthy Mind Initiatives brings the work into professional and contemporary settings, with pathways for individuals, institutions, teams and high-performance roles.</p>
-            </div>
-
-            <div className="mt-14 grid gap-5 lg:grid-cols-3">
-              {[
-                ['For organizations', 'Custom learning and training programs for teams, leadership and high-performance roles.', Building2, 'Request corporate training'],
-                ['For institutions', 'Structured modules for students and educators focused on attention, learning and mental development.', GraduationCap, 'Explore institutional programs'],
-                ['For individuals', 'Personal learning and practice pathways focused on clarity, focus and mental control.', HeartHandshake, 'Join Patanjal Upasana'],
-              ].map(([title, text, Icon, cta]) => (
-                <article key={title} className="rounded-[2rem] border border-[#715846]/10 bg-[#f8f4ec] p-7 md:p-8">
-                  <div className="grid size-12 place-items-center rounded-2xl bg-[#e8dac7]"><Icon size={22}/></div>
-                  <h3 className="mt-9 font-serif text-3xl">{title}</h3>
-                  <p className="mt-3 min-h-24 leading-7 text-[#6b655f]">{text}</p>
-                  <a href="#engage" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#754629]">{cta}<ArrowRight size={16}/></a>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="research" className="py-24 md:py-32">
-          <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-[.85fr_1.15fr]">
-            <div>
-              <SectionLabel>Research & inquiry</SectionLabel>
-              <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-5xl">Tradition, examined with a contemporary lens.</h2>
-              <p className="mt-5 leading-8 text-[#65716d]">The work draws on sustained study of Sāṃkhya, Yoga and Vedic thought while engaging contemporary questions around cognition, wellbeing and human development.</p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                ['30 years', 'Research and study informing the conceptual framework described in the source material.'],
-                ['400+', 'Participants in a structured five-session series on Sandhyā and its framework.'],
-                ['Global learning', 'Fellowship participation described across India, the USA and the UK.'],
-                ['Academic engagement', 'Paper and abstract submissions/selection described for conferences in Surat, Oxford and Paris.'],
-              ].map(([big, text]) => (
-                <div key={big} className="rounded-3xl border border-black/5 bg-white/55 p-6">
-                  <Microscope className="text-[#45675d]" size={21}/>
-                  <div className="mt-7 font-serif text-3xl">{big}</div>
-                  <p className="mt-2 text-sm leading-6 text-[#69746f]">{text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="programs" className="border-y border-black/5 bg-white/35 py-24 md:py-32">
-          <div className="mx-auto max-w-7xl px-5 md:px-8">
-            <div className="max-w-2xl">
-              <SectionLabel>What we are building</SectionLabel>
-              <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-5xl">Practice. Study. Community. Research.</h2>
-            </div>
-            <div className="mt-12 divide-y divide-black/10 border-y border-black/10">
-              {[
-                ['01', 'Weekend Sandhyopāsanā Practice', 'Continuous community practice with morning and evening formats described in the source document.'],
-                ['02', 'Structured Sandhyā Learning', 'A framework-based course designed to make the practice and its underlying principles accessible.'],
-                ['03', 'Heritage Awareness', 'Public awareness around Sandhyā and Pañca Mahāyajña as elements of India’s cultural heritage.'],
-                ['04', 'Sāṃkhya–Yoga Fellowship', 'A weekly program for deeper conceptual study and a method for engaging the work of the Ṛṣis.'],
-              ].map(([n, title, text]) => (
-                <div key={n} className="grid gap-3 py-7 md:grid-cols-[80px_1fr_1fr] md:items-center">
-                  <div className="text-xs tracking-[.2em] text-[#8a948f]">{n}</div>
-                  <div className="font-serif text-2xl">{title}</div>
-                  <div className="max-w-xl text-sm leading-6 text-[#69746f]">{text}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="about" className="py-24 md:py-32">
-          <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-2">
-            <div>
-              <SectionLabel>Conceptual foundation</SectionLabel>
-              <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-5xl">Rooted in India.<br/>Intended for humanity.</h2>
-            </div>
-            <div className="space-y-5 text-lg leading-8 text-[#606d68]">
-              <p>The source material describes the work as being informed by the research of Dr. Harishchandra, an internationally recognized combustion scientist, Vedic scholar and author, and an alumnus of IIT Kanpur and Princeton University.</p>
-              <p>Its purpose is to translate deep philosophical inquiry into an accessible framework for understanding and developing the mind—not simply as a response to problems, but as part of living well.</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="engage" className="px-5 pb-8 md:px-8 md:pb-12">
-          <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.4rem] bg-[#173f34] px-6 py-16 text-white md:px-12 md:py-20">
-            <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-              <div className="max-w-3xl">
-                <SectionLabel>Get involved</SectionLabel>
-                <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-6xl">A healthier mind can become a lifelong practice.</h2>
-                <p className="mt-5 max-w-2xl text-lg leading-8 text-[#d3ded9]">Join the practitioner community, explore a learning program, or speak with us about bringing Healthy Mind Initiatives to your organization or institution.</p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://youtube.com/@quarkwellbeing" target="_blank" rel="noreferrer" className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#173f34]">Explore our work</a>
-                <a href="mailto:hello@example.com" className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold">Contact us</a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-sm text-[#707b76] md:flex-row md:items-center md:justify-between md:px-8">
-        <div>© {new Date().getFullYear()} Samyak Dhyaan Sangha</div>
-        <div className="flex flex-wrap gap-5">
-          <a href="https://youtube.com/@quarkwellbeing" target="_blank" rel="noreferrer">Quark Wellbeing</a>
-          <a href="https://youtube.com/@darshan-quest" target="_blank" rel="noreferrer">Darshan Quest</a>
-          <a href="https://quarkwellbeing.substack.com/" target="_blank" rel="noreferrer">Blog</a>
-        </div>
-      </footer>
-    </div>
-  )
-}
-
-export default App
+export default function App(){return <Layout><Routes><Route path="/" element={<Home/>}/><Route path="/approach" element={<Approach/>}/><Route path="/community" element={<Community/>}/><Route path="/professional" element={<Professional/>}/><Route path="/research" element={<Research/>}/><Route path="/testimonials" element={<Testimonials/>}/><Route path="/team" element={<Team/>}/><Route path="/contact" element={<Contact/>}/></Routes></Layout>}
